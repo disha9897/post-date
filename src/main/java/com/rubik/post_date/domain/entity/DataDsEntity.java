@@ -19,7 +19,7 @@ public class DataDsEntity {
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
 
-    @Column(length = 4000)
+    @Column(length = 4000)   // adding len
     private String status;
 
     @Column(length = 4000)
