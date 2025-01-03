@@ -32,5 +32,20 @@ public class DateMapper {
             e.printStackTrace();
             return null;
         }
+
+//        try {
+//            String jsonString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(dateRequestDto);
+//            System.out.println("Serialized JSON:");
+//            System.out.println(jsonString);
+//
+//            DateRequestDto deserializedObject = objectMapper.readValue(jsonString, DateRequestDto.class);
+//            System.out.println("Deserialized Object:");
+//            System.out.println(deserializedObject);
+//
+//            return jsonString;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
     }
 }

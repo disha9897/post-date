@@ -30,47 +30,6 @@ public class DataDsService {
     @Autowired
     private DateMapper dateMapper;
 
-
-
-//    public List<DataDsEntity> postPrint(String inputDate) throws Exception {
-//        DataDsEntity entity = new DataDsEntity();
-//        String jsonData = dateMapper.dateMapp(inputDate);
-//        if(jsonData == null) {
-//            throw new Exception("No data to send. jsonData is null.");
-//        }
-//
-//        String url = "https://ewayasp.webtel.in/EWayBill/v1.4/GetEWBOtherParty";
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.APPLICATION_JSON);
-//        HttpEntity<String> entityToBePosted = new HttpEntity<>(jsonData, headers);
-//        System.out.println(jsonData);
-//        try {
-//            ResponseEntity<List<BasicResponse>> responseEntity = restTemplate.exchange(url, HttpMethod.POST, entityToBePosted,
-//                    new ParameterizedTypeReference<List<BasicResponse>>() {});
-//
-//            List<BasicResponse> responseList = responseEntity.getBody();
-//            if (responseList == null) {
-//                throw new Exception("Received null response from the external API.");
-//            }
-//
-//            List<DataDsEntity> dataDsEntityList = responseList.stream().map(this::mapDtoToEntity).collect(Collectors.toList());
-//
-//            return dataDsRepository.saveAll(dataDsEntityList);
-//
-//        } catch (HttpClientErrorException | HttpServerErrorException ex) {
-//            throw new Exception("API error: " + ex.getStatusCode() + " " + ex.getMessage());
-//        } catch (ResourceAccessException ex) {
-//            throw new Exception("Connection error: " + ex.getMessage());
-//        } catch (Exception ex) {
-//            throw new Exception("Unexpected error: " + ex.getMessage());
-//        }
-////        List<BasicResponse> responseList = restTemplate.exchange(url, HttpMethod.POST, entityToBePosted, new ParameterizedTypeReference<List<BasicResponse>>() {
-////        }).getBody();
-////
-////        List<DataDsEntity> dataDsEntityList = responseList.stream().map(this::mapDtoToEntity).collect(Collectors.toList());
-////        return dataDsRepository.saveAll(dataDsEntityList);
-//    }
-
     public List<DataDsEntity> postPrint(LocalDate inputDate) throws Exception {
         DataDsEntity entity = new DataDsEntity();
         String jsonData = dateMapper.dateMapp(inputDate); // Pass LocalDate to the mapper
@@ -119,23 +78,24 @@ public class DataDsService {
         entity.setGSTIN(basicResponse.gSTIN);
         entity.setDocNo((String) basicResponse.docNo);
         entity.setUniqueKey((String) basicResponse.uniqueKey);
+
         for(BasicResponse.EWBDetails  ewbDetails: basicResponse.getEWBDetails()){
             DataDsEntity.EWBDetails ewb = new DataDsEntity.EWBDetails();
-            ewb.setStatus(ewb.status);
-            ewb.setEwbNo(ewb.ewbNo);
-            ewb.setEwayBillDate(ewb.ewayBillDate);
-            ewb.setGenMode(ewb.genMode);
-            ewb.setGenGstin(ewb.genGstin);
-            ewb.setDocNo(ewb.docNo);
-            ewb.setDocDate(ewb.docDate);
-            ewb.setFromGstin(ewb.fromGstin);
-            ewb.setFromTradeName(ewb.fromTradeName);
-            ewb.setToGstin(ewb.toGstin);
-            ewb.setToTradeName(ewb.toTradeName);
-            ewb.setTotInvValue(ewb.totInvValue);
-            ewb.setHsnCode(ewb.hsnCode);
-            ewb.setHsnCode(Integer.parseInt(ewb.hsnDesc));
-            ewb.setRejectStatus(ewb.rejectStatus);
+            ewb.setStatus(ewbDetails.status);
+            ewb.setEwbNo(ewbDetails.ewbNo);
+            ewb.setEwayBillDate(ewbDetails.ewayBillDate);
+            ewb.setGenMode(ewbDetails.genMode);
+            ewb.setGenGstin(ewbDetails.genGstin);
+            ewb.setDocNo(ewbDetails.docNo);
+            ewb.setDocDate(ewbDetails.docDate);
+            ewb.setFromGstin(ewbDetails.fromGstin);
+            ewb.setFromTradeName(ewbDetails.fromTradeName);
+            ewb.setToGstin(ewbDetails.toGstin);
+            ewb.setToTradeName(ewbDetails.toTradeName);
+            ewb.setTotInvValue(ewbDetails.totInvValue);
+            ewb.setHsnCode(ewbDetails.hsnCode);
+            ewb.setHsnDesc(ewbDetails.hsnDesc);
+            ewb.setRejectStatus(ewbDetails.rejectStatus);
         }
         entity.setAlert((String) basicResponse.alert);
         entity.setInfo((String) basicResponse.info);
