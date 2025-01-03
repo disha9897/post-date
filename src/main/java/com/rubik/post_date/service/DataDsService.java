@@ -119,7 +119,24 @@ public class DataDsService {
         entity.setGSTIN(basicResponse.gSTIN);
         entity.setDocNo((String) basicResponse.docNo);
         entity.setUniqueKey((String) basicResponse.uniqueKey);
-        entity.setEWBDetails(basicResponse.eWBDetails);
+        for(BasicResponse.EWBDetails  ewbDetails: basicResponse.getEWBDetails()){
+            DataDsEntity.EWBDetails ewb = new DataDsEntity.EWBDetails();
+            ewb.setStatus(ewb.status);
+            ewb.setEwbNo(ewb.ewbNo);
+            ewb.setEwayBillDate(ewb.ewayBillDate);
+            ewb.setGenMode(ewb.genMode);
+            ewb.setGenGstin(ewb.genGstin);
+            ewb.setDocNo(ewb.docNo);
+            ewb.setDocDate(ewb.docDate);
+            ewb.setFromGstin(ewb.fromGstin);
+            ewb.setFromTradeName(ewb.fromTradeName);
+            ewb.setToGstin(ewb.toGstin);
+            ewb.setToTradeName(ewb.toTradeName);
+            ewb.setTotInvValue(ewb.totInvValue);
+            ewb.setHsnCode(ewb.hsnCode);
+            ewb.setHsnCode(Integer.parseInt(ewb.hsnDesc));
+            ewb.setRejectStatus(ewb.rejectStatus);
+        }
         entity.setAlert((String) basicResponse.alert);
         entity.setInfo((String) basicResponse.info);
 

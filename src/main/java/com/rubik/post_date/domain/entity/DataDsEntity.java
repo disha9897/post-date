@@ -1,10 +1,14 @@
 package com.rubik.post_date.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.rubik.post_date.domain.dto.BasicResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -49,8 +53,9 @@ public class DataDsEntity {
     @Column(length = 4000)
     private String uniqueKey;
 
-    @Column(length = 4000)
-    private String eWBDetails;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ewb_details_id")
+    public List<EWBDetails> eWBDetails;
 
     @Column(length = 4000)
     private String alert;
@@ -60,5 +65,31 @@ public class DataDsEntity {
 
     @Column(length = 4000)
     private String userDate;
+
+    @Entity
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Table(name = "ewb_details")
+    public static class EWBDetails{
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private String id;
+        public String status;
+        public long ewbNo;
+        public String ewayBillDate;
+        public String genMode;
+        public String genGstin;
+        public String docNo;
+        public String docDate;
+        public String fromGstin;
+        public String fromTradeName;
+        public String toGstin;
+        public String toTradeName;
+        public double totInvValue;
+        public int hsnCode;
+        public String hsnDesc;
+        public String rejectStatus;
+    }
 
 }
