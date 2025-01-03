@@ -1,17 +1,22 @@
 package com.rubik.post_date.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.rubik.post_date.components.EWBDetailsDeserializer;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BasicResponse{
+public class BasicResponse {
+
     @JsonProperty("Status")
     public String status;
 
@@ -43,7 +48,8 @@ public class BasicResponse{
     public Object uniqueKey;
 
     @JsonProperty("EWBDetails")
-    public List<EWBDetails> eWBDetails;
+    @JsonDeserialize(using = EWBDetailsDeserializer.class)
+    public List<EWBDetails> eWBDetails = new ArrayList<>();
 
     @JsonProperty("Alert")
     public Object alert;
@@ -51,12 +57,10 @@ public class BasicResponse{
     @JsonProperty("Info")
     public Object info;
 
-
-
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public class EWBDetails{
+    public static class EWBDetails {
         public String status;
         public long ewbNo;
         public String ewayBillDate;
@@ -74,4 +78,3 @@ public class BasicResponse{
         public String rejectStatus;
     }
 }
-

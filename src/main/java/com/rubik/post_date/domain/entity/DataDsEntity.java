@@ -1,7 +1,4 @@
 package com.rubik.post_date.domain.entity;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.rubik.post_date.domain.dto.BasicResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
@@ -23,7 +20,7 @@ public class DataDsEntity {
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
 
-    @Column(length = 4000)   // adding len
+    @Column(length = 4000)
     private String status;
 
     @Column(length = 4000)
@@ -74,7 +71,7 @@ public class DataDsEntity {
     public static class EWBDetails{
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private String id;
+        private int id;
         public String status;
         public long ewbNo;
         public String ewayBillDate;
